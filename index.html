@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Message</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #ffe6e6, #ff99cc);
+            overflow: hidden;
+        }
+
+        .letter {
+            font-size: 8rem;
+            color: #ff4d4d;
+            font-weight: bold;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            transition: transform 0.2s ease-in-out;
+            user-select: none;
+        }
+
+        .letter:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .message, .thank-you {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 30px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 3;
+            animation: fadeIn 1.5s forwards;
+            max-height: 70vh; /* Set max-height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            width: 80%; /* Adjust width if needed */
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .message h1, .thank-you h1 {
+            margin: 0;
+            color: #ff4d4d;
+            font-size: 2.5rem;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        .message p, .thank-you p {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .message button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #ff4d4d;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .message button:hover {
+            background-color: #e63939;
+        }
+
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem; /* Adjusted size for the emoji */
+            animation: float 4s infinite ease-in-out;
+            z-index: 2;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="letter" id="letter" onclick="openMessage()">💌</div>
+
+    <div class="message" id="message">
+        <h1>Hey Baby Anannya, My Love ❤️</h1>
+        <p>
+            Hey baby Anannya, my baby, my love. 💕✨
+            I love you so much! 😘💖 Words cannot express how grateful I am for having you in my life. 🌈🌹
+            Thank you for everything you do for me—tu mazi sathi yeteke efforts karte, khu sagad karte, and khu ghal te yete sagda karte mazi sathi. 🙏❤️
+            
+            You always go above and beyond for me, whether it's cooking 🍝 pasta, 🍚 rice, or anything else I love.
+            Papinu khu ghalte, ladd karte, and ani mala samjun ghun prem karte—you are my pillar of strength. 💪🌟
+            You take care of me in ways no one else ever could. 🌷🌸 The little things you do with so much love 💞
+            make me feel like the luckiest person alive. 🍀👫
+            
+            You forgive my mistakes without a second thought 😌🤗, ignore my faults, and never let anger 😠🚫
+            come between us. Tujhya premat ekve hamesha maza samjun ghene rahte, je khup special aahe. 🥰💌
+            Tuzya samjun ghene ani mala support karne—you truly make me a better person every single day. 🌟✨
+            
+            Aata, last 11 days paun je zala tya sathi mi khup sorry aahe. 😔🙏 Tya dishancha mala khup
+            javalne rahil, ani mi mazi sagli chuki kabool karto. 🙇‍♂️ I truly, deeply, and genuinely
+            apologize for all my mistakes. ❤️‍🩹 Anannya, tujhyavar prem karnar kunachihi himmat nahi! 🌹💏
+            
+            At last, I just want to say:
+            You are not just my love—you are my whole world 🌍, my reason to smile 😊, and my forever. ♾️💞
+            Tula prem karne is not just my choice; it’s my destiny. 🌟💖 You make my life brighter,
+            happier 😄, and complete. Thank you for being you. 💖💐
+            
+            I will always cherish every moment with you 🕰️💝, and I will never stop loving you.
+            ❤️ तुझाच कायमचा, कायमचा प्रेमें. ❤️
+            
+        </p>
+        <button onclick="closeMessage()">Close</button>
+    </div>
+
+    <div class="thank-you" id="thank-you">
+        <h1>Thank You ❤️</h1>
+        <p>You are my world and my forever! 💖</p>
+    </div>
+
+    <div class="hearts" id="hearts"></div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '💋'; // Changed to kissing emoji
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.getElementById('hearts').appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        function openMessage() {
+            document.getElementById('letter').style.display = 'none'; // Hide the letter
+            document.getElementById('message').style.display = 'block'; // Show the message
+        }
+
+        function closeMessage() {
+            document.getElementById('message').style.display = 'none'; // Hide the message
+            document.getElementById('thank-you').style.display = 'block'; // Show thank-you message
+        }
+    </script>
+</body>
+</html>
